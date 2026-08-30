@@ -1,0 +1,13 @@
+{
+  "name": "Wordle Standings",
+  "short_name": "Wordle",
+  "start_url": ".",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "Wordle_Standings_Icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}
