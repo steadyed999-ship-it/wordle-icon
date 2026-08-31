@@ -5,7 +5,7 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "Wordle_Standings_Icon.png",
+      "src": "Wordle_Standings_Icon_new.png",
       "sizes": "1024x1024",
       "type": "image/png"
     }
