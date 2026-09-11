@@ -5,7 +5,7 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "favicon2.png?v=99",
+  "src": "wordle-scorekeeper.newicon.png?v=1",
       "sizes": "480x480",
       "type": "image/png"
     }
