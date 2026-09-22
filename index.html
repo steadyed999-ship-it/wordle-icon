@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 
 <link rel="manifest" href="https://steadyed999-ship-it.github.io/wordle-icon/manifest.json">
-<link rel="apple-touch-icon" sizes="480x480" href="https://steadyed999-ship-it.github.io/wordle-icon/favicon2.png?v=99">
-<link rel="shortcut icon" href="https://steadyed999-ship-it.github.io/wordle-icon/favicon2.png?v=99">
-<link rel="icon" type="image/png" href="https://steadyed999-ship-it.github.io/wordle-icon/favicon2.png?v=99">
+<link rel="apple-touch-icon" sizes="180x180" href="https://steadyed999-ship-it.github.io/wordle-icon/apple-touch-icon-180.png?v=7">
+<link rel="shortcut icon" href="https://steadyed999-ship-it.github.io/wordle-icon/favicon2.png?v=7">
+<link rel="icon" type="image/png" href="https://steadyed999-ship-it.github.io/wordle-icon/apple-touch-icon-180.png?v=7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Wordle Scorekeeper">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wordle Scorekeeper</title>
 
 <style>
@@ -35,6 +36,18 @@
 <body>
   <h2>Wordle Scorekeeper</h2>
   <p>Tap below to open the app.</p>
-  <a href="https://script.google.com/macros/s/AKfycbwBxGMznOeUaah-GHaDwQ_-a2koArKQwnkiBKZimd9ZVGMBEqCoVjUtI6jEUyMGPZY1/exec">Open App</a>
+  <a id="openAppLink" href="https://script.google.com/macros/s/AKfycbxPyh1yeKwhdabNFEMGV1DTYmGn0VF7ztqLBsDTqThD8xzrwDsP3ABOctfopDo1RdT2/exec">Open App</a>
+
+  <script>
+    // If this page itself was opened with ?group=...&player=... baked in
+    // (from someone's personal Home Screen icon), carry those same
+    // parameters through to the real app link below, so tapping
+    // "Open App" logs straight in as the right person in the right group.
+    var params = window.location.search;
+    if (params) {
+      var link = document.getElementById('openAppLink');
+      link.href = link.href + params;
+    }
+  </script>
 </body>
 </html>
