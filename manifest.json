@@ -1,13 +1,12 @@
 {
-  "name": "Wordle Standings",
-  "short_name": "Wordle",
+  "name": "Our Daily Score",
+  "short_name": "Daily Score",
   "start_url": ".",
   "display": "standalone",
+  "background_color": "#101012",
+  "theme_color": "#101012",
   "icons": [
-    {
-      "src": "apple-touch-icon-180.png?v=7",
-      "sizes": "180x180",
-      "type": "image/png"
-    }
+    { "src": "ods-icon-180.png?v=3", "sizes": "180x180", "type": "image/png" },
+    { "src": "ods-icon-512.png?v=3", "sizes": "512x512", "type": "image/png" }
   ]
 }
