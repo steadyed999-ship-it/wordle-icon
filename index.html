@@ -45,6 +45,25 @@
     // personal Home Screen icon), pass those same codes on to the app so it
     // opens as the right person in the right group.
     document.getElementById('app').src = APP_URL + window.location.search;
+
+    // The app runs inside Google's frame, where iPad Home Screen apps lose
+    // saved settings (like "Remember me"). This page keeps them instead.
+    var SAVE_KEY = 'ods_saved';
+    function loadSaved(){
+      try { return JSON.parse(localStorage.getItem(SAVE_KEY) || '{}'); } catch(e) { return {}; }
+    }
+    window.addEventListener('message', function(e){
+      var host = '';
+      try { host = new URL(e.origin).hostname; } catch(x) { return; }
+      if(!/\.googleusercontent\.com$/.test(host)) return;
+      var d = e.data;
+      if(!d || typeof d !== 'object') return;
+      if(d.ods === 'save'){
+        try { localStorage.setItem(SAVE_KEY, JSON.stringify(d.data || {})); } catch(x) {}
+      } else if(d.ods === 'load'){
+        e.source.postMessage({ ods: 'data', data: loadSaved() }, e.origin);
+      }
+    });
   </script>
 </body>
 </html>
