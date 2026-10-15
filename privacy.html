@@ -22,7 +22,7 @@
 <body>
 <main>
   <h1>Our Daily Score – Privacy Policy</h1>
-  <p class="date">Effective October 9, 2026</p>
+  <p class="date">Effective October 15, 2026</p>
 
   <p>Our Daily Score is a free app for keeping score of a daily word puzzle with family and friends.
   This policy explains what information the app uses and how. In short: it keeps only what it needs
@@ -32,7 +32,9 @@
   <p>When you use Our Daily Score, the following is saved so your group can see the scoreboard:</p>
   <ul>
     <li><strong>Group details</strong>: the group name and its join code.</li>
-    <li><strong>Player details</strong>: the name each player enters and the 4-digit PIN they choose.</li>
+    <li><strong>Player details</strong>: the name each player enters and a scrambled version of the 4-digit PIN they choose.
+    PINs are never saved as the actual number. They are turned into a one-way code, so no one, including the developer,
+    can look up your PIN.</li>
     <li><strong>Scores</strong>: the date, number of guesses, and the result text and grid a player shares or types in.</li>
   </ul>
   <p>This information is stored in a private Google Sheet run by the app's developer through Google Apps Script.
@@ -51,8 +53,10 @@
 
   <h2>Who can see your information</h2>
   <p>Your name and scores are visible to the other members of your group, meaning anyone who has your group's code.
-  Share your code only with people you want in your group. The developer can also see the stored information
-  in order to run and fix the app.</p>
+  Share your code only with people you want in your group. Each group's leader (the first person to join)
+  can reset a player's PIN or remove a player from that group, but cannot see anyone's PIN.
+  The developer can also see the stored names, scores, and group details in order to run and fix the app,
+  but not your PIN.</p>
 
   <h2>What the app does not do</h2>
   <ul>
@@ -68,9 +72,17 @@
   entered information, contact us and it will be removed.</p>
 
   <h2>Deleting your information</h2>
-  <p>You can delete your own scores in the app. To remove a player or an entire group, email
-  <a href="mailto:ourdailyscore@gmail.com">ourdailyscore@gmail.com</a> with the group code and player name,
-  and it will be deleted.</p>
+  <ul>
+    <li>You can delete any of your own scores in the app.</li>
+    <li>You can delete your whole account (your player and all of your scores) at any time with
+    <strong>"Delete my account"</strong> at the bottom of the app.</li>
+    <li>A group leader can remove a player and their scores from their group.</li>
+    <li>To remove an entire group, email <a href="mailto:ourdailyscore@gmail.com">ourdailyscore@gmail.com</a>
+    with the group code, and it will be deleted.</li>
+  </ul>
+  <p>So that mistakes can be undone, a copy of anything deleted is kept in a private backup for up to
+  <strong>30 days</strong> and is then permanently erased automatically. If you'd like your information erased
+  sooner, email <a href="mailto:ourdailyscore@gmail.com">ourdailyscore@gmail.com</a>.</p>
 
   <h2>Changes to this policy</h2>
   <p>If this policy changes, the updated version will be posted on this page with a new effective date.</p>
