@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ourdailyscore.com/">
+<meta property="og:title" content="Our Daily Score">
+<meta property="og:description" content="The free family scoreboard for the daily word puzzle. Make a group, invite your people, and crown a champion every 100 days.">
+<meta property="og:image" content="https://www.ourdailyscore.com/ods-link-preview.png?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.ourdailyscore.com/ods-icon-180.png?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.ourdailyscore.com/ods-favicon-32.png?v=3">
+<link rel="shortcut icon" href="https://www.ourdailyscore.com/ods-favicon-32.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Our Daily Score">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Daily Score</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #101012;
+    overflow: hidden;
+    font-family: -apple-system, system-ui, sans-serif;
+    color: #eceef0;
+  }
+  #app {
+    display: block;
+    border: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+  }
+  /* Shown only if the app doesn't load (for example inside Facebook's
+     built-in browser), so nobody is left looking at a black screen. */
+  #help {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #101012;
+    padding: 40px 22px;
+    text-align: center;
+    overflow: auto;
+  }
+  #help img { width: 110px; height: 110px; border-radius: 24px; }
+  #help h1 { font-size: 26px; margin: 18px 0 6px; }
+  #help p { color: #9aa0a6; font-size: 16px; line-height: 1.5; max-width: 420px; margin: 10px auto; }
+  #help a.btn {
+    display: inline-block; margin-top: 14px; background: #7fb2ea; color: #10202c;
+    text-decoration: none; font-weight: 700; font-size: 17px;
+    padding: 14px 24px; border-radius: 12px;
+  }
+  #help .tip {
+    margin: 22px auto 0; max-width: 420px; background: #18191c;
+    border: 1px solid #2c2d31; border-radius: 12px; padding: 14px 16px;
+    color: #eceef0; font-size: 15px; line-height: 1.5; text-align: left;
+  }
+</style>
+</head>
+<body>
+  <!-- The scoreboard app loads right here, filling the whole screen. -->
+  <iframe id="app" title="Our Daily Score" allow="clipboard-read; clipboard-write"></iframe>
+
+  <div id="help">
+    <img src="ods-icon-180.png?v=3" alt="">
+    <h1>Our Daily Score</h1>
+    <p>The free family scoreboard for the daily word puzzle.</p>
+    <a class="btn" id="openBtn" href="#">Open Our Daily Score</a>
+    <div class="tip" id="inAppTip">
+      <b>Opened from Facebook or Instagram?</b><br>
+      Their built-in browser can't always show the app. Tap the <b>•••</b> (or <b>⋮</b>) at the top right and choose <b>Open in browser</b> (Safari or Chrome).
+    </div>
+  </div>
+
+  <script>
+    // The real app (Google Apps Script).
+    var APP_URL = "https://script.google.com/macros/s/AKfycbxPyh1yeKwhdabNFEMGV1DTYmGn0VF7ztqLBsDTqThD8xzrwDsP3ABOctfopDo1RdT2/exec";
+    var target = APP_URL + window.location.search;
+
+    // If this page was opened with ?group=...&player=... (from an invite or
+    // someone's personal Home Screen icon), pass those codes on to the app.
+    document.getElementById('app').src = target;
+    document.getElementById('openBtn').href = target;
+
+    // Facebook / Instagram / Messenger built-in browsers.
+    var ua = navigator.userAgent || '';
+    var inApp = /FBAN|FBAV|FB_IAB|Instagram|Messenger/i.test(ua);
+    if(!inApp) document.getElementById('inAppTip').style.display = 'none';
+
+    // The app says hello as soon as it starts. If it hasn't within a few
+    // seconds, show the help screen instead of a black page.
+    var appReady = false;
+    function showHelp(){ if(!appReady) document.getElementById('help').style.display = 'block'; }
+    setTimeout(showHelp, inApp ? 4000 : 9000);
+
+    // The app runs inside Google's frame, where iPad Home Screen apps lose
+    // saved settings (like "Remember me"). This page keeps them instead.
+    var SAVE_KEY = 'ods_saved';
+    function loadSaved(){
+      try { return JSON.parse(localStorage.getItem(SAVE_KEY) || '{}'); } catch(e) { return {}; }
+    }
+    window.addEventListener('message', function(e){
+      var host = '';
+      try { host = new URL(e.origin).hostname; } catch(x) { return; }
+      if(!/\.googleusercontent\.com$/.test(host)) return;
+      var d = e.data;
+      if(!d || typeof d !== 'object') return;
+      appReady = true;
+      document.getElementById('help').style.display = 'none';
+      if(d.ods === 'save'){
+        try { localStorage.setItem(SAVE_KEY, JSON.stringify(d.data || {})); } catch(x) {}
+      } else if(d.ods === 'load'){
+        e.source.postMessage({ ods: 'data', data: loadSaved() }, e.origin);
+      }
+    });
+  </script>
+</body>
+</html>
