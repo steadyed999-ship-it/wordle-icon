@@ -54,6 +54,11 @@
     text-decoration: none; font-weight: 700; font-size: 17px;
     padding: 14px 24px; border-radius: 12px;
   }
+  #help a.btn2 {
+    display: inline-block; margin-top: 12px; background: #1f2024; color: #7fb2ea;
+    border: 1px solid #2c2d31; text-decoration: none; font-weight: 700; font-size: 17px;
+    padding: 13px 22px; border-radius: 12px;
+  }
   #help .tip {
     margin: 22px auto 0; max-width: 420px; background: #18191c;
     border: 1px solid #2c2d31; border-radius: 12px; padding: 14px 16px;
@@ -70,6 +75,12 @@
     <h1>Our Daily Score</h1>
     <p>The free scoreboard for family, friends and coworkers who play the daily word puzzle.</p>
     <a class="btn" id="openBtn" href="#">Open Our Daily Score</a>
+    <!-- Facebook/Instagram's built-in browser can't run the app, so there
+         we offer the App Store (iPhone/iPad) or a real browser instead. -->
+    <div id="inAppBtns" style="display:none;">
+      <a class="btn" id="storeBtn" href="https://apps.apple.com/us/app/our-daily-score/id6821641083" style="display:none;">Get the free app</a><br>
+      <a class="btn2" id="browserBtn" href="#" style="display:none;"></a>
+    </div>
     <div class="tip" id="inAppTip">
       <b>Opened from Facebook or Instagram?</b><br>
       Their built-in browser can't always show the app. Tap the <b>•••</b> (or <b>⋮</b>) at the top right and choose <b>Open in browser</b> (Safari or Chrome).
@@ -91,11 +102,32 @@
     var inApp = /FBAN|FBAV|FB_IAB|Instagram|Messenger/i.test(ua);
     if(!inApp) document.getElementById('inAppTip').style.display = 'none';
 
+    if(inApp){
+      var ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && 'ontouchend' in document);
+      var android = /Android/i.test(ua);
+      var here = 'https://www.ourdailyscore.com/' + window.location.search;
+      var bb = document.getElementById('browserBtn');
+      document.getElementById('openBtn').style.display = 'none';
+      document.getElementById('inAppBtns').style.display = 'block';
+      if(ios){
+        document.getElementById('storeBtn').style.display = 'inline-block';
+        bb.href = 'x-safari-' + here;
+        bb.textContent = 'Open in Safari';
+        bb.style.display = 'inline-block';
+      } else if(android){
+        bb.href = 'intent://www.ourdailyscore.com/' + window.location.search +
+          '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(here) + ';end';
+        bb.textContent = 'Open in Chrome';
+        bb.className = 'btn';
+        bb.style.display = 'inline-block';
+      }
+    }
+
     // The app says hello as soon as it starts. If it hasn't within a few
     // seconds, show the help screen instead of a black page.
     var appReady = false;
     function showHelp(){ if(!appReady) document.getElementById('help').style.display = 'block'; }
-    setTimeout(showHelp, inApp ? 4000 : 9000);
+    setTimeout(showHelp, inApp ? 2500 : 9000);
 
     // The app runs inside Google's frame, where iPad Home Screen apps lose
     // saved settings (like "Remember me"). This page keeps them instead.
